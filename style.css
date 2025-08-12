@@ -1,0 +1,141 @@
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+h1 {
+    color: #333;
+}
+
+.game-container {
+    border: 5px solid #bbb;
+    background-color: #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Se añade para limitar el ancho en pantallas grandes */
+    max-width: 400px; 
+    width: 90%;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 5px;
+    background-color: #ddd;
+    border-radius: 4px;
+}
+
+#mines-count, #timer {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+#reset-button {
+    padding: 5px 10px;
+    font-size: 1em;
+    cursor: pointer;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 4px;
+}
+
+#reset-button:hover {
+    background-color: #45a049;
+}
+
+#board {
+    display: grid;
+    /* Se eliminarán las columnas fijas para ser dinámicas */
+    gap: 1px;
+    border: 2px solid #999;
+    /* Se usa 'auto-fit' para que se adapte al contenedor */
+    grid-template-columns: repeat(var(--board-size, 10), 1fr); 
+}
+
+.cell {
+    /* El tamaño de la celda se ajusta para ser un cuadrado */
+    width: 100%;
+    padding-bottom: 100%; /* Truco para mantener una relación de aspecto 1:1 */
+    height: 0;
+    position: relative; /* Necesario para posicionar el contenido */
+
+    background-color: #a9a9a9;
+    border: 2px solid;
+    border-color: #f0f0f0 #777 #777 #f0f0f0;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    /*align-items: center; se comenta ya que genera error con la posicion de las banderas*/ 
+    font-size: 1.2em;
+    font-weight: bold;
+    color: transparent;
+    user-select: none;
+}
+
+/* El contenido (número o icono) se posiciona dentro de la celda */
+.cell > span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.cell.revealed {
+    background-color: #d3d3d3;
+    border-color: #999;
+    color: #333;
+    cursor: default;
+}
+
+.cell.mine {
+    background-color: red;
+    color: black;
+}
+
+.cell.flagged {
+    background-color: #d3d3d3;
+    border: 2px solid;
+    border-color: #999;
+}
+
+.cell.flagged::before {
+    content: '🚩';
+    font-size: 1.2em;
+    color: red;
+}
+
+/* Colores para los números según el Buscaminas clásico */
+.cell[data-adjacent="1"] { color: blue; }
+.cell[data-adjacent="2"] { color: green; }
+.cell[data-adjacent="3"] { color: red; }
+.cell[data-adjacent="4"] { color: navy; }
+.cell[data-adjacent="5"] { color: maroon; }
+.cell[data-adjacent="6"] { color: teal; }
+.cell[data-adjacent="7"] { color: black; }
+.cell[data-adjacent="8"] { color: gray; }
+
+/* Media query para pantallas más pequeñas */
+@media (max-width: 500px) {
+    h1 {
+        font-size: 1.5em;
+    }
+    .header {
+        font-size: 0.9em;
+    }
+    #mines-count, #timer {
+        font-size: 1em;
+    }
+    #reset-button {
+        font-size: 0.9em;
+    }
+}
